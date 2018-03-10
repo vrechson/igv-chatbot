@@ -1,0 +1,2 @@
+export TELEGRAM_API_TOKEN=
+export MONGO_DB_URI=
