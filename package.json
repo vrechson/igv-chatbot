@@ -1,0 +1,32 @@
+{
+  "name": "igv-chatbot",
+  "version": "1.0.0",
+  "description": "a solução que faltava para o igv são carlos",
+  "main": "config.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.9",
+    "node-telegram-bot-api": "^0.30.0"
+  },
+  "devDependencies": {
+    "debug": "^3.1.0",
+    "nodemon": "^1.17.1"
+  },
+  "scripts": {
+    "start": "node bin/start",
+    "start:debug": "DEBUG=igv-chatbot:* nodemon bin/start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whoismath/igv-chatbot.git"
+  },
+  "contributors": [
+    "Rogério Munhoz <rogerio.j.munhoz@gmail.com>"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whoismath/igv-chatbot/issues"
+  },
+  "homepage": "https://github.com/whoismath/igv-chatbot#readme"
+}

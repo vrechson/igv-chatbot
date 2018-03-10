@@ -1,0 +1,256 @@
+{
+  "id": 3963093,
+  "url": "https://gis.aiesec.org/v2/applications/3963093",
+  "required_backgrounds_percentage": 100,
+  "required_skills_percentage": 100,
+  "status": "open",
+  "current_status": "open",
+  "an_signed_at": null,
+  "nps_grade": null,
+  "date_realized": null,
+  "date_approved": null,
+  "custom_status": null,
+  "experience_start_date": null,
+  "experience_end_date": null,
+  "favourite": null,
+  "person": {
+    "id": 936076,
+    "email": "denisa.zemanova@agstepanska.cz",
+    "url": "https://gis.aiesec.org/v2/people/936076",
+    "first_name": "Denisa",
+    "dob": "1994-05-30",
+    "referral_type": null,
+    "gcdp_count": 0,
+    "is_pop_user": false,
+    "secure_identity": null,
+    "aiesec_email": null,
+    "profile_completeness": {
+      "gv": true,
+      "gt": true,
+      "ge": true
+    },
+    "is_vd_app_user": null,
+    "full_name": "Denisa Zemanova",
+    "last_name": "Zemanova",
+    "home_lc": {
+      "id": 607,
+      "name": "PRAGUE",
+      "country": "Czech Republic"
+    },
+    "interviewed": true,
+    "is_employee": null,
+    "nationalities": [
+      {
+        "id": 392,
+        "name": "Czech Republic",
+        "matching_with_opportunity": null
+      }
+    ],
+    "managed_companies": [],
+    "account_manager": null,
+    "permissions": {
+      "can_update": false,
+      "can_anonymize": false,
+      "can_edit_managers": false,
+      "can_interview": false,
+      "can_view_applications": false,
+      "should_pay_at_apply": false,
+      "has_paid_for_apply": true,
+      "can_mark_apply_paid": false,
+      "can_mark_gep": false,
+      "can_apply": true,
+      "can_change_lc": false,
+      "can_take_ef_test": true
+    },
+    "profile_photo_url": "https://cdn-expa.aiesec.org/gis-img/missing_profile_d.svg",
+    "cover_photo_url": "https://cdn-expa.aiesec.org/gis-img/missing_person_cover.png",
+    "programme_fees": [
+      {
+        "id": 1377,
+        "programme_id": 1,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 0,
+        "fee_for": "incoming",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 1,
+          "short_name": "GV"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      },
+      {
+        "id": 1379,
+        "programme_id": 5,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 6000,
+        "fee_for": "incoming",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 5,
+          "short_name": "GE"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      },
+      {
+        "id": 1378,
+        "programme_id": 2,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 25000,
+        "fee_for": "incoming",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 2,
+          "short_name": "GT"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      },
+      {
+        "id": 121,
+        "programme_id": 1,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 4990,
+        "fee_for": "outgoing",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 1,
+          "short_name": "GV"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      },
+      {
+        "id": 122,
+        "programme_id": 2,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 8990,
+        "fee_for": "outgoing",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 2,
+          "short_name": "GT"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      },
+      {
+        "id": 123,
+        "programme_id": 5,
+        "mc_id": 1570,
+        "currency_id": 25,
+        "fee": 4990,
+        "fee_for": "outgoing",
+        "enabled": true,
+        "contract": null,
+        "lc_id": null,
+        "programmes": {
+          "id": 5,
+          "short_name": "GE"
+        },
+        "currency": {
+          "id": 25,
+          "name": "Czech Koruna",
+          "alphabetic_code": "CZK"
+        }
+      }
+    ]
+  },
+  "opportunity": {
+    "id": 859874,
+    "title": "SMART: Marketing & Management in São Carlos",
+    "lat": "-22.0087082",
+    "lng": "-47.8909263",
+    "url": "https://gis.aiesec.org/v2/opportunities/859874",
+    "status": "open",
+    "location": "São Carlos, Brazil",
+    "is_gep": false,
+    "programmes": {
+      "id": 1,
+      "short_name": "GV"
+    },
+    "office": {
+      "id": 435,
+      "name": "São Carlos",
+      "full_name": "AIESEC in São Carlos",
+      "email": "saocarlos@aiesec.org.br",
+      "tag": "LC",
+      "parent_id": 1606,
+      "signup_link": null,
+      "country": "Brazil",
+      "url": "https://gis.aiesec.org/v2/committees/435"
+    },
+    "earliest_start_date": "2018-08-14T00:00:00Z",
+    "latest_end_date": "2018-09-25T00:00:00Z",
+    "applications_close_date": "2018-08-20T00:00:00Z",
+    "profile_photo_urls": {
+      "original": "https://s3.eu-west-1.amazonaws.com/gis-production-eu/profile_photos/original/1501708237.png?1501708237",
+      "medium": "https://s3.eu-west-1.amazonaws.com/gis-production-eu/profile_photos/medium/1501708237.png?1501708237",
+      "thumb": "https://s3.eu-west-1.amazonaws.com/gis-production-eu/profile_photos/thumb/1501708237.png?1501708237"
+    },
+    "cover_photo_urls": "https://s3.eu-west-1.amazonaws.com/gis-production-eu/profile_photos/original/1501708415.png?1501708415"
+  },
+  "standards": [],
+  "scheduled_interview": null,
+  "permissions": {
+    "can_update": true,
+    "can_be_rejected": true,
+    "can_be_matched": true,
+    "can_sign_an": false,
+    "can_be_approved_tn": false,
+    "can_be_approved_ep": false,
+    "can_be_realized": false,
+    "can_be_completed": false,
+    "should_pay_at_match": false,
+    "has_paid_for_match": false,
+    "can_mark_match_paid": false,
+    "should_pay_at_realize": false,
+    "has_paid_for_realize": false,
+    "can_mark_realize_paid": false,
+    "can_be_withdrawn": false,
+    "can_be_reopened": false,
+    "can_be_approval_broken": false,
+    "can_be_realize_broken": false,
+    "should_complete_nps": false,
+    "should_complete_ldm": false,
+    "has_completed_nps": false,
+    "has_completed_ldm": false,
+    "can_fill_standards": false,
+    "can_fill_complete_ldm": false,
+    "has_filled_complete_ldm": false,
+    "can_view_mos_certificate": false
+  },
+  "created_at": "2018-03-10T09:47:12Z",
+  "updated_at": "2018-03-10T09:47:12Z"
+}
