@@ -3,20 +3,19 @@
 const { Schema } = require('mongoose')
 
 const properties = {
-  _id: {
+  code: {
     type: Number,
     required: true
   },
   person: {
     _id: {
-      type: Number,
+      type: Schema.Types.ObjectId,
       required: true
     }
   }
 }
 
 const options = {
-  _id: false,
   id: false,
   collection: 'applications',
   versionKey: false,
