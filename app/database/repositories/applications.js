@@ -1,6 +1,6 @@
 'use strict'
 
-class ApplicationsRepository {
+class ApplicationRepository {
   constructor (model) {
     this.$model = model
   }
@@ -13,6 +13,15 @@ class ApplicationsRepository {
     return this.$model.findOne({ _id: id })
                       .lean()
   }
+
+  /**
+   * Returns all existing applications
+   * @returns {Promise<Array[Object]>}
+   */
+  async list () {
+    return this.$model.find({})
+                      .lean()
+  }
 }
 
-module.exports = ApplicationsRepository
+module.exports = ApplicationRepository

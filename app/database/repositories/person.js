@@ -13,6 +13,15 @@ class PersonRepository {
     return this.$model.findOne({ _id: id })
                       .lean()
   }
+
+  /**
+   * Returns all existing people
+   * @returns {Promise<Array[Object]>}
+   */
+  async list () {
+    return this.$model.find({})
+               .lean()
+  }
 }
 
 module.exports = PersonRepository
