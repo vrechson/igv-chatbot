@@ -71,7 +71,6 @@ const factory = () => {
             .catch(console.error)
   })
 
-
   return bot
 }
 
