@@ -16,9 +16,12 @@ const PersonService = require('./services/person')
 const factory = () => {
   const { repositories, storages } = database.factory()
 
+  const personService = new PersonService(repositories.person, storages.person)
+  const applicationService = new ApplicationService(repositories.application, storages.application, personService)
+
   const services = {
-    application: new ApplicationService(repositories.application, storages.application),
-    person: new PersonService(repositories.person, storages.person)
+    person: personService,
+    application: applicationService
   }
 
   const monitor = Monitor.factory(services)

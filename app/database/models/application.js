@@ -16,10 +16,12 @@ const properties = {
 }
 
 const options = {
-  id: false,
   collection: 'applications',
-  versionKey: false,
-  strict: true
+  id: false,
+  safe: true,
+  strict: true,
+  timestamps: false,
+  versionKey: false
 }
 
 const schema = new Schema(properties, options)

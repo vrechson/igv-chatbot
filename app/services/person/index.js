@@ -30,6 +30,15 @@ class PersonService {
   }
 
   /**
+   * Returns the codes of all existing people
+   * @returns {Promise<Array[Number]>}
+   */
+  async listCodes () {
+    return this.$repository.list()
+                           .then(results => results.map(x => x.code))
+  }
+
+  /**
    * Creates a new person
    * @param code code of the person
    * @returns {Promise<Object>}
@@ -39,7 +48,7 @@ class PersonService {
       throw new InvalidParameterError('person code')
     }
 
-    return this.$storage.create(code)
+    return this.$storage.create(parseInt(code))
   }
 }
 

@@ -10,10 +10,12 @@ const properties = {
 }
 
 const options = {
-  id: false,
   collection: 'people',
-  versionKey: false,
-  strict: true
+  id: false,
+  safe: true,
+  strict: true,
+  timestamps: false,
+  versionKey: false
 }
 
 const schema = new Schema(properties, options)

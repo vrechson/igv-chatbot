@@ -1,7 +1,5 @@
 'use strict'
 
-const { pick } = require('lodash')
-
 class PersonStorage {
   constructor (model) {
     this.$model = model
@@ -13,7 +11,7 @@ class PersonStorage {
    * @returns {Promise<Object>}
    */
   async create (code) {
-    return this.$model.create({ code }, { new: true })
+    return this.$model.create({ code: code })
                       .then(document => document.toObject())
   }
 }
