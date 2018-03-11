@@ -46,10 +46,31 @@ const factory = () => {
     }
   })
 
-  bot.onText(/^\/start/, (msg) => {
+  bot.onText(/^\/start/, (msg, match) => {
     commands.start(msg, bot)
             .catch(console.error)
   })
+
+  bot.onText(/^\/first (\d)/, (msg, match) => {
+    commands.first(msg, bot, match[1], PersonService)
+            .catch(console.error)
+  })
+
+  bot.onText(/^\/last (\d)/, (msg, match) => {
+    commands.last(msg, bot, match[1], PersonService)
+            .catch(console.error)
+  })
+
+  bot.onText(/^\/rand (\d)/, (msg, match) => {
+    commands.rand(msg, bot, match[1], PersonService)
+            .catch(console.error)
+  })
+
+  bot.onText(/^\/help/, (msg, match) => {
+    commands.help(msg, bot)
+            .catch(console.error)
+  })
+
 
   return bot
 }
