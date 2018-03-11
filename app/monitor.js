@@ -30,32 +30,40 @@ class Monitor {
     }
 
     const peopleSet = applications.reduce((set, application) => set.add(application.person.id), new Set())
-    const personIds = Array.from(peopleSet.keys())
+    const personCodes = Array.from(peopleSet.keys())
 
-    const dbPeople = await this.$services.person.listIds()
+    const dbPeople = await this.$services.person.listCodes()
 
-    const newPeople = personIds.filter(id => !dbPeople.includes(id))
+    const newPeople = personCodes.filter(id => !dbPeople.includes(id))
 
     console.log('creating', newPeople.length, 'new people')
 
-    const personPromises = newPeople.map(personId => {
-      return this.$services.person.create(personId)
+    const personPromises = newPeople.map(async personCode => {
+      return this.$services.person.create(personCode)
+                 .catch(console.error)
     })
 
-    await Promise.all(personPromises)
+    const createdPeople = await Promise.all(personPromises)
 
-    const applicationsMap = applications.map((map, application) => map.set(application.id, application), new Map())
-    const applicationIds = Array.from(applicationsMap.keys())
+    const createdPeopleMap = createdPeople.reduce((map, createdPerson) => {
+      return map.set(createdPerson.code, createdPerson)
+    }, new Map())
 
-    const dbApplications = await this.$services.application.listIds()
+    const applicationsMap = applications.reduce((map, application) => map.set(application.id, application), new Map())
+    const applicationCodes = Array.from(applicationsMap.keys())
 
-    const newApplications = applicationIds.filter(id => !dbApplications.includes(id))
+    const dbApplications = await this.$services.application.listCodes()
+
+    const newApplications = applicationCodes.filter(id => !dbApplications.includes(id))
 
     console.log('creating', newApplications.length, 'new applications')
 
-    const applicationPromises = newApplications.map(applicationId => {
-      const application = applicationsMap.get(applicationId)
-      return this.$services.application.create(application.person.id, applicationId)
+    const applicationPromises = newApplications.map(applicationCode => {
+      const application = applicationsMap.get(applicationCode)
+      const person = createdPeopleMap.get(application.person.id)
+
+      return this.$services.application.create(applicationCode, person._id)
+                 .catch(console.error)
     })
 
     await Promise.all(applicationPromises)
@@ -70,12 +78,6 @@ const factory = (services) => {
     params: {
       access_token: config.EXPA_API_TOKEN
     }
-  })
-
-  http.interceptors.request.use(request => {
-    console.log(request)
-
-    return request
   })
 
   return new Monitor(http, config, services)
