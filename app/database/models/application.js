@@ -20,6 +20,7 @@ const options = {
   collection: 'applications',
   versionKey: false,
   strict: true
+}
 
 const schema = new Schema(properties, options)
 

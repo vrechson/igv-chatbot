@@ -7,6 +7,11 @@ class ApplicationStorage {
     this.$model = model
   }
 
+  /**
+   * Creates an application
+   * @param params New application information
+   * @returns {Promise<Object>}
+   */
   async create (params) {
     const application = pick(params, [
       'code',

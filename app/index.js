@@ -1,21 +1,29 @@
 'use strict'
 
 const config = require('../config')
-const commands = require('./lib/commands')
-const database = require('./lib/database')
+const Monitor = require('./monitor')
+const commands = require('./commands')
+const database = require('./database')
 const TelegramBot = require('node-telegram-bot-api')
 
 /**
- * Services
+ * SERVICES
+ * @returns {TelegramBot}
  */
-const ApplicationService = require('./lib/services/applications')
+const ApplicationService = require('./services/applications')
+const PersonService = require('./services/person')
 
 const factory = () => {
   const { repositories, storages } = database.factory()
 
   const services = {
-    applications: new ApplicationService(repositories.application, storages.application)
+    application: new ApplicationService(repositories.application, storages.application),
+    person: new PersonService(repositories.person, storages.person)
   }
+
+  const monitor = Monitor.factory(services)
+
+  monitor.start()
 
   const bot = new TelegramBot(config.TELEGRAM_API_TOKEN, {
     polling: {
@@ -23,20 +31,25 @@ const factory = () => {
     }
   })
 
-  const instances = {
-    bot,
-    services
-  }
-
-  bot.on('message', (msg) => {
+  bot.on('message', async (msg) => {
     if ('new_chat_members' in msg) {
+      const joinedIds = msg.new_chat_members.map(user => user.id)
+
+      const me = await bot.getMe()
+
+      if (!joinedIds.includes(me.id)) {
+        return
+      }
+
       return commands.start(msg, bot)
                      .catch(console.error)
     }
   })
 
-  bot.onText(/^\/find (\d+)/ig, (msg, match) => commands.find(msg, match, instances))
-  bot.onText(/^\/create (\d+) (\d+)/ig, (msg, match) => commands.create(msg, match, instances))
+  bot.onText(/^\/start/, (msg) => {
+    commands.start(msg, bot)
+            .catch(console.error)
+  })
 
   return bot
 }
