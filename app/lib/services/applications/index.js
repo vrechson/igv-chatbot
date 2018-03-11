@@ -32,21 +32,15 @@ class ApplicationService {
    * Creates a new application
    * @param {Object} params New application data
    */
-  async create (params) {
-    const application = pick(params, [
-      '_id',
-      'person._id'
-    ])
-
-    if (isNaN(application._id)) {
-      throw new InvalidParameterError('application id')
+  async create (code, personId) {
+    const application = {
+      code,
+      person: {
+        _id: personId
+      }
     }
 
-    if (isNaN(application.person._id)) {
-      throw new InvalidParameterError('person id')
-    }
-
-    return this.$storage.create(params)
+    return this.$storage.create(application)
   }
 }
 
