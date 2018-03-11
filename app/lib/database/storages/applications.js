@@ -9,7 +9,7 @@ class ApplicationStorage {
 
   async create (params) {
     const application = pick(params, [
-      '_id',
+      'code',
       'person._id'
     ])
 

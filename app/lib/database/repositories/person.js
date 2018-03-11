@@ -1,13 +1,13 @@
 'use strict'
 
-class ApplicationsRepository {
+class PersonRepository {
   constructor (model) {
     this.$model = model
   }
 
   /**
-   * Finds an application by its id
-   * @param {String} id Application id
+   * Finds an person by its id
+   * @param {String} id person id
    */
   async find (id) {
     return this.$model.findOne({ _id: id })
@@ -15,4 +15,4 @@ class ApplicationsRepository {
   }
 }
 
-module.exports = ApplicationsRepository
+module.exports = PersonRepository
