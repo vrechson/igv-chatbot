@@ -18,7 +18,7 @@ class ApplicationStorage {
       'person._id'
     ])
 
-    return this.$model.create(application, { new: true })
+    return this.$model.create(application)
                       .then(document => document.toObject())
   }
 }
