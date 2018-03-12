@@ -1,7 +1,8 @@
 'use strict'
 
-const config = require('../config')
 const axios = require('axios')
+const userData = require('./userData')
+const config = require('../config')
 
 class Monitor {
   constructor (http, config, services) {
