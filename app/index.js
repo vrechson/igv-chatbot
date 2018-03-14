@@ -30,7 +30,7 @@ const factory = () => {
     }
   })
 
-  const monitor = Monitor.factory(services, bot)
+  const monitor = Monitor.factory(services, bot, msg)
 
   monitor.start()
 
