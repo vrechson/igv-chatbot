@@ -10,7 +10,7 @@ class Monitor {
     this.$config = config
     this.$services = services
     this.$bot = bot
-    this.$msg = msg
+    this.$msg
   }
 
   async start () {
@@ -40,7 +40,7 @@ class Monitor {
     const newPeople = personCodes.filter(id => !dbPeople.includes(id))
 
     console.log('creating', newPeople.length, 'new people')
-    this.$bot.sendMessage(msg.chat.id, 'New person applied!', {
+    this.$bot.sendMessage('New person applied!', {
       reply_markup: {
         inline_keyboard: [[{
             text: 'take it!',
