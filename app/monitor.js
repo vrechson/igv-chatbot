@@ -5,11 +5,12 @@ const userData = require('./userData')
 const config = require('../config')
 
 class Monitor {
-  constructor (http, config, services, bot) {
+  constructor (http, config, services, bot, msg) {
     this.$http = http
     this.$config = config
     this.$services = services
     this.$bot = bot
+    this.$msg = msg
   }
 
   async start () {
@@ -84,7 +85,7 @@ class Monitor {
   }
 }
 
-const factory = (services, bot) => {
+const factory = (services, bot, msg) => {
   const http = axios.create({
     baseURL: config.EXPA_API_URL,
     params: {
