@@ -12,6 +12,7 @@ const TelegramBot = require('node-telegram-bot-api')
  */
 const ApplicationService = require('./services/applications')
 const PersonService = require('./services/person')
+let mesg = 1
 
 const factory = () => {
   const { repositories, storages } = database.factory()
@@ -30,7 +31,7 @@ const factory = () => {
     }
   })
 
-  const monitor = Monitor.factory(services, bot, msg)
+  const monitor = Monitor.factory(services, bot, mesg)
 
   monitor.start()
 
@@ -39,6 +40,8 @@ const factory = () => {
       const joinedIds = msg.new_chat_members.map(user => user.id)
 
       const me = await bot.getMe()
+
+      mesg = msg
 
       if (!joinedIds.includes(me.id)) {
         return
@@ -50,8 +53,10 @@ const factory = () => {
   })
 
   bot.onText(/^\/start/, (msg, match) => {
+    mesg = msg
     commands.start(msg, bot)
             .catch(console.error)
+
   })
 
   bot.onText(/^\/first (\d)/, (msg, match) => {
