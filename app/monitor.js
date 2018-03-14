@@ -5,10 +5,11 @@ const userData = require('./userData')
 const config = require('../config')
 
 class Monitor {
-  constructor (http, config, services) {
+  constructor (http, config, services, bot) {
     this.$http = http
     this.$config = config
     this.$services = services
+    this.$bot = bot
   }
 
   async start () {
@@ -40,6 +41,16 @@ class Monitor {
     console.log('creating', newPeople.length, 'new people')
 
     const personPromises = newPeople.map(async personCode => {
+
+      bot.sendMessage(msg.chat.id, 'New person applied!', {
+        reply_markup: {
+          inline_keyboard: [[{
+              text: 'take it!',
+              switch_inline_query: 'éoque'
+          }]]
+        }
+      })
+
       return this.$services.person.create(personCode)
                  .catch(console.error)
     })
@@ -73,7 +84,7 @@ class Monitor {
   }
 }
 
-const factory = (services) => {
+const factory = (services, bot) => {
   const http = axios.create({
     baseURL: config.EXPA_API_URL,
     params: {
@@ -81,7 +92,7 @@ const factory = (services) => {
     }
   })
 
-  return new Monitor(http, config, services)
+  return new Monitor(http, config, services, bot)
 }
 
 module.exports = { factory }
