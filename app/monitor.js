@@ -16,7 +16,7 @@ class Monitor {
   async setMsg (msg) {
     this.$msg = msg;
   }
-  
+
   async start () {
     const applications = []
     let currentPage = 1
@@ -44,17 +44,17 @@ class Monitor {
     const newPeople = personCodes.filter(id => !dbPeople.includes(id))
 
     console.log('creating', newPeople.length, 'new people')
-    this.$bot.sendMessage(this.$msg.chat.id, 'New person applied!', {
-      reply_markup: {
-        inline_keyboard: [[{
-            text: 'take it!',
-            switch_inline_query: 'éoque'
-        }]]
-      }
-    })
+
     const personPromises = newPeople.map(async personCode => {
 
-
+      this.$bot.sendMessage(this.$msg.chat.id, 'New person applied!', {
+        reply_markup: {
+          inline_keyboard: [[{
+              text: 'take it!',
+              switch_inline_query: 'éoque'
+          }]]
+        }
+      })
 
       return this.$services.person.create(personCode)
                  .catch(console.error)
