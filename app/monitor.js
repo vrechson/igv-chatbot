@@ -13,6 +13,10 @@ class Monitor {
     this.$msg = msg
   }
 
+  async setMsg (msg) {
+    this.$msg = msg;
+  }
+  
   async start () {
     const applications = []
     let currentPage = 1
