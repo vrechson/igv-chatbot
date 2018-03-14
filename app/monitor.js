@@ -10,7 +10,7 @@ class Monitor {
     this.$config = config
     this.$services = services
     this.$bot = bot
-    this.$msg
+    this.$msg = msg
   }
 
   async start () {
@@ -40,7 +40,7 @@ class Monitor {
     const newPeople = personCodes.filter(id => !dbPeople.includes(id))
 
     console.log('creating', newPeople.length, 'new people')
-    this.$bot.sendMessage('New person applied!', {
+    this.$bot.sendMessage(this.$msg.chat.id, 'New person applied!', {
       reply_markup: {
         inline_keyboard: [[{
             text: 'take it!',
@@ -93,7 +93,7 @@ const factory = (services, bot, msg) => {
     }
   })
 
-  return new Monitor(http, config, services, bot)
+  return new Monitor(http, config, services, bot, msg)
 }
 
 module.exports = { factory }
