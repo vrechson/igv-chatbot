@@ -41,7 +41,7 @@ const factory = () => {
 
       const me = await bot.getMe()
 
-      mesg = msg
+      Monitor.setMsg(msg)
 
       if (!joinedIds.includes(me.id)) {
         return
@@ -53,7 +53,7 @@ const factory = () => {
   })
 
   bot.onText(/^\/start/, (msg, match) => {
-    mesg = msg
+    Monitor.setMsg(msg)
     commands.start(msg, bot)
             .catch(console.error)
 
