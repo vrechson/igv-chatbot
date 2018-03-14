@@ -24,15 +24,15 @@ const factory = () => {
     application: applicationService
   }
 
-  const monitor = Monitor.factory(services)
-
-  monitor.start()
-
   const bot = new TelegramBot(config.TELEGRAM_API_TOKEN, {
     polling: {
       autoStart: false
     }
   })
+
+  const monitor = Monitor.factory(services, bot)
+
+  monitor.start()
 
   bot.on('message', async (msg) => {
     if ('new_chat_members' in msg) {
