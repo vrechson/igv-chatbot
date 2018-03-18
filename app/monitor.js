@@ -21,14 +21,21 @@ class Monitor {
         const { full_name, home_lc: { country } } = peopleMap.get(key)
 
         return this.$bot.sendMessage(chatId, `${full_name} just applied from ${country}`, {
-          reply_markup: {
-            inline_keyboard: [ [ {
-              text: 'take it!',
-              switch_inline_query: 'éoque'
-            } ] ]
-          }
-        })
-      })
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'TAKE',
+                            callback_data: "take",
+                        },
+                        {
+                            text: 'REJECT',
+                            callback_data: "reject",
+                        },
+                    ],
+                ],
+            },
+        });
 
       for (const promise of notificationPromises) {
         await promise
@@ -59,7 +66,7 @@ class Monitor {
     }
 
     const peopleMap = applications.reduce((set, application) => set.set(application.person.id, application.person), new Map())
-    const personCodes = Array.from(peopleSet.keys())
+    const personCodes = Array.from(peopleMap.keys())
 
     const dbPeople = await this.$services.person.listCodes()
 
