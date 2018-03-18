@@ -4,25 +4,26 @@ const config = require('../config')
 const Monitor = require('./monitor')
 const commands = require('./commands')
 const database = require('./database')
+const debug = require('debug')('igv-bot:app')
+const ChatService = require('./services/chat')
+const PersonService = require('./services/person')
 const TelegramBot = require('node-telegram-bot-api')
+const ApplicationService = require('./services/applications')
 
 /**
- * SERVICES
  * @returns {TelegramBot}
  */
-const ApplicationService = require('./services/applications')
-const PersonService = require('./services/person')
-let mesg = 1
-
 const factory = () => {
   const { repositories, storages } = database.factory()
 
   const personService = new PersonService(repositories.person, storages.person)
   const applicationService = new ApplicationService(repositories.application, storages.application, personService)
+  const chatService = new ChatService(repositories.chat, storages.chat)
 
   const services = {
     person: personService,
-    application: applicationService
+    application: applicationService,
+    chat: chatService
   }
 
   const bot = new TelegramBot(config.TELEGRAM_API_TOKEN, {
@@ -31,7 +32,10 @@ const factory = () => {
     }
   })
 
-  const monitor = Monitor.factory(services, bot, mesg)
+  bot.getMe()
+     .then(me => { debug(`Listening on ${me.username}`) })
+
+  const monitor = Monitor.factory(services, bot)
 
   monitor.start()
 
@@ -41,22 +45,18 @@ const factory = () => {
 
       const me = await bot.getMe()
 
-      monitor.setMsg(msg)
-
       if (!joinedIds.includes(me.id)) {
         return
       }
 
-      return commands.start(msg, bot)
+      return commands.start(msg, bot, services)
                      .catch(console.error)
     }
   })
 
   bot.onText(/^\/start/, (msg, match) => {
-    monitor.setMsg(msg)
-    commands.start(msg, bot)
+    commands.start(msg, bot, services)
             .catch(console.error)
-
   })
 
   bot.onText(/^\/first (\d)/, (msg, match) => {
