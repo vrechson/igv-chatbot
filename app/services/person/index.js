@@ -43,12 +43,12 @@ class PersonService {
    * @param code code of the person
    * @returns {Promise<Object>}
    */
-  async create (code) {
+  async create (code, name) {
     if (isNaN(code)) {
       throw new InvalidParameterError('person code')
     }
 
-    return this.$storage.create(parseInt(code))
+    return this.$storage.create(parseInt(code), name)
   }
 }
 

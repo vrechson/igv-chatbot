@@ -12,13 +12,15 @@ class Monitor {
     this.$bot = bot
   }
 
-  async notifyJoining (newPeople) {
+  async notifyJoining (peopleMap) {
     const chatsToNotify = await this.$services.chat.findAll()
                                                    .then(chats => chats.map(chat => chat.chatId))
 
     for (const chatId of chatsToNotify) {
-      const notificationPromises = newPeople.map(() => {
-        return this.$bot.sendMessage(chatId, 'New person applied!', {
+      const notificationPromises = Array.from(peopleMap.keys()).map(key => {
+        const { full_name, home_lc: { country } } = peopleMap.get(key)
+
+        return this.$bot.sendMessage(chatId, `${full_name} just applied from ${country}`, {
           reply_markup: {
             inline_keyboard: [ [ {
               text: 'take it!',
@@ -56,7 +58,7 @@ class Monitor {
       applications.push(...data.data)
     }
 
-    const peopleSet = applications.reduce((set, application) => set.add(application.person.id), new Set())
+    const peopleMap = applications.reduce((set, application) => set.set(application.person.id, application.person), new Map())
     const personCodes = Array.from(peopleSet.keys())
 
     const dbPeople = await this.$services.person.listCodes()
@@ -66,11 +68,12 @@ class Monitor {
     debug('creating', newPeople.length, 'new people')
 
     const personPromises = newPeople.map(async personCode => {
-      return this.$services.person.create(personCode)
+      const person = peopleMap.get(personCode)
+      return this.$services.person.create(personCode, person.full_name)
                                   .catch(console.error)
     })
 
-    await this.notifyJoining(newPeople)
+    await this.notifyJoining(peopleMap)
 
     const createdPeople = await Promise.all(personPromises)
 

@@ -6,6 +6,10 @@ const properties = {
   code: {
     type: Number,
     required: true
+  },
+  name: {
+    type: String,
+    required: true
   }
 }
 
