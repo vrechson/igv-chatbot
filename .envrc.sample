@@ -1,5 +1,0 @@
-//export TELEGRAM_API_TOKEN=529116445:AAF4VyUMjxjSi5WbD7sslfS5pUSk7PxNo6Y
-export TELEGRAM_API_TOKEN=559954875:AAF61IlMIo8J47Op1gniWaUvkQyqBunKEY0
-export MONGO_DB_URI=mongodb://localhost:27017/igv-bot
-export EXPA_API_URL=https://gis-api.aiesec.org/v2/
-export EXPA_API_TOKEN=ca0d3145d31291684e662ae8f79293bdca35f7b0cb712b903b530f59e491ac65
