@@ -30,6 +30,14 @@ class PersonService {
   }
 
   /**
+  * Finds a person based on its code
+  * @param {number} code The person's code
+  **/
+  async findByCode (code) {
+    return this.$repository.findByCode(code)
+  }
+
+  /**
    * Returns the codes of all existing people
    * @returns {Promise<Array[Number]>}
    */
