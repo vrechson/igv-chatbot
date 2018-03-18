@@ -11,7 +11,7 @@ class PersonStorage {
    * @returns {Promise<Object>}
    */
   async create (code, name) {
-    return this.$model.create({ code: code, name: name })
+    return this.$model.create({ code: code, name: name})
                       .then(document => document.toObject())
   }
 }

@@ -26,13 +26,13 @@ class Monitor {
                     [
                         {
                             text: 'TAKE',
-                            callback_data: "take",
+                            callback_data: `take_${key}`,
                         }
                     ],
                     [
                         {
                             text: 'REJECT',
-                            callback_data: "reject",
+                            callback_data: `reject_${key}`,
                         },
                     ],
                 ],

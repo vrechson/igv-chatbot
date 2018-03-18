@@ -22,6 +22,14 @@ class PersonRepository {
     return this.$model.find({})
                .lean()
   }
+
+  /**
+  * Finds a person by its code
+  * @param {number} code Person's code
+  **/
+  async findByCode (code) {
+    return this.$model.findOne({ code })
+  }
 }
 
 module.exports = PersonRepository

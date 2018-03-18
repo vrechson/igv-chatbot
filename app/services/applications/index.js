@@ -67,6 +67,10 @@ class ApplicationService {
 
     return this.$storage.create(application)
   }
+
+  async findByPerson (id) {
+    return this.$repository.findByPerson(id)
+  }
 }
 
 module.exports = ApplicationService

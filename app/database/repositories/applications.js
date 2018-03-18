@@ -15,6 +15,16 @@ class ApplicationRepository {
   }
 
   /**
+  * Find all applications of a person
+  * @param personId Id of the person
+  * @returns {Promise<Array[Object]>}
+  **/
+  async findByPerson (personId) {
+    return this.$model.find({ 'person._id': personId })
+                      .lean()
+  }
+
+  /**
    * Returns all existing applications
    * @returns {Promise<Array[Object]>}
    */

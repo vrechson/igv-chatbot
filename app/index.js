@@ -8,6 +8,7 @@ const debug = require('debug')('igv-bot:app')
 const ChatService = require('./services/chat')
 const PersonService = require('./services/person')
 const TelegramBot = require('node-telegram-bot-api')
+const UserDataService = require('./services/user-data')
 const ApplicationService = require('./services/applications')
 
 /**
@@ -19,11 +20,13 @@ const factory = () => {
   const personService = new PersonService(repositories.person, storages.person)
   const applicationService = new ApplicationService(repositories.application, storages.application, personService)
   const chatService = new ChatService(repositories.chat, storages.chat)
+  const userDataService = new UserDataService(config, applicationService, personService)
 
   const services = {
     person: personService,
     application: applicationService,
-    chat: chatService
+    chat: chatService,
+    userData: userDataService
   }
 
   const bot = new TelegramBot(config.TELEGRAM_API_TOKEN, {
@@ -79,11 +82,20 @@ const factory = () => {
             .catch(console.error)
   })
 
-  bot.on("callback_query", (callbackQuery) => {
+  bot.on("callback_query", async (callbackQuery) => {
     const msg = callbackQuery.message
+
+    const [ operation, personId ] = callbackQuery.data.split('_')
+
+    if (operation === 'take') {
+      const applicant = await userDataService.find(personId)
+
+      return bot.answerCallbackQuery(callbackQuery.id)
+        .then(() => bot.editMessageText(`${callbackQuery.message.text}\n[+] taken by: ${callbackQuery.from.first_name} ${callbackQuery.from.last_name}`, { message_id: msg.message_id, chat_id: msg.chat.id }))
+    }
+
     bot.answerCallbackQuery(callbackQuery.id)
-        .then(() => bot.sendMessage(msg.chat.id, "You clicked!"))
-    console.log(callbackQuery)
+      .then(() => bot.editMessageText(`${callbackQuery.message.text}\n[+] rejected by: ${callbackQuery.from.first_name} ${callbackQuery.from.last_name}`, { message_id: msg.message_id, chat_id: msg.chat.id }))
   });
 
   return bot
