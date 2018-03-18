@@ -79,6 +79,13 @@ const factory = () => {
             .catch(console.error)
   })
 
+  bot.on("callback_query", (callbackQuery) => {
+    const msg = callbackQuery.message
+    bot.answerCallbackQuery(callbackQuery.id)
+        .then(() => bot.sendMessage(msg.chat.id, "You clicked!"))
+    console.log(callbackQuery)
+  });
+
   return bot
 }
 

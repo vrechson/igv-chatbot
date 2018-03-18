@@ -27,7 +27,9 @@ class Monitor {
                         {
                             text: 'TAKE',
                             callback_data: "take",
-                        },
+                        }
+                    ],
+                    [
                         {
                             text: 'REJECT',
                             callback_data: "reject",
@@ -35,7 +37,8 @@ class Monitor {
                     ],
                 ],
             },
-        });
+        })
+      })
 
       for (const promise of notificationPromises) {
         await promise
