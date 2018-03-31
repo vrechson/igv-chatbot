@@ -14,29 +14,29 @@ class Monitor {
 
   async notifyJoining (peopleMap) {
     const chatsToNotify = await this.$services.chat.findAll()
-                                                   .then(chats => chats.map(chat => chat.chatId))
+      .then(chats => chats.map(chat => chat.chatId))
 
     for (const chatId of chatsToNotify) {
       const notificationPromises = Array.from(peopleMap.keys()).map(key => {
-        const { full_name, home_lc: { country } } = peopleMap.get(key)
+        const { full_name: fullName, home_lc: { country } } = peopleMap.get(key)
 
-        return this.$bot.sendMessage(chatId, `${full_name} just applied from ${country}`, {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {
-                            text: 'TAKE',
-                            callback_data: `take_${key}`,
-                        }
-                    ],
-                    [
-                        {
-                            text: 'REJECT',
-                            callback_data: `reject_${key}`,
-                        },
-                    ],
-                ],
-            },
+        return this.$bot.sendMessage(chatId, `${fullName} just applied from ${country}`, {
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: 'TAKE',
+                  callback_data: `take_${key}`,
+                }
+              ],
+              [
+                {
+                  text: 'REJECT',
+                  callback_data: `reject_${key}`,
+                }
+              ]
+            ]
+          }
         })
       })
 
@@ -51,8 +51,9 @@ class Monitor {
     const applications = []
     let currentPage = 1
     let totalItems = 1
+    let lastItemCount = 101
 
-    while (applications.length < totalItems) {
+    while (applications.length < totalItems && lastItemCount >= 100) {
       debug(`Requesting page ${currentPage} of ${Math.ceil(totalItems / 100)}`)
       const { data } = await this.$http.get('/applications', {
         params: {
@@ -66,6 +67,8 @@ class Monitor {
       totalItems = data.paging.total_items
 
       applications.push(...data.data)
+
+      lastItemCount = data.data.length
     }
 
     const peopleMap = applications.reduce((set, application) => set.set(application.person.id, application.person), new Map())
@@ -80,7 +83,7 @@ class Monitor {
     const personPromises = newPeople.map(async personCode => {
       const person = peopleMap.get(personCode)
       return this.$services.person.create(personCode, person.full_name)
-                                  .catch(console.error)
+        .catch(console.error)
     })
 
     await this.notifyJoining(peopleMap)
