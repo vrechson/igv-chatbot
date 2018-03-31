@@ -52,6 +52,7 @@ class Monitor {
     let currentPage = 1
     let totalItems = 1
     let lastItemCount = 101
+    const date = new Date().toISOString().slice(0, 10)
 
     while (applications.length < totalItems && lastItemCount >= 100) {
       debug(`Requesting page ${currentPage} of ${Math.ceil(totalItems / 100)}`)
@@ -59,6 +60,7 @@ class Monitor {
         params: {
           'filters[status]': 'open',
           'filters[my]': 'opportunity',
+          'filters[created_at][from]': date,
           page: currentPage++,
           per_page: 100
         }
