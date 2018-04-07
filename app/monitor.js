@@ -3,6 +3,7 @@
 const axios = require('axios')
 const debug = require('debug')('igv-bot:monitor')
 const config = require('../config')
+const moment = require('moment')
 
 class Monitor {
   constructor (http, config, services, bot) {
@@ -52,7 +53,7 @@ class Monitor {
     let currentPage = 1
     let totalItems = 1
     let lastItemCount = 101
-    const date = new Date().toISOString().slice(0, 10)
+    const date = moment().format("YYYY-MM-DD")
 
     while (applications.length < totalItems && lastItemCount >= 100) {
       debug(`Requesting page ${currentPage} of ${Math.ceil(totalItems / 100)}`)
@@ -66,6 +67,7 @@ class Monitor {
         }
       })
 
+      console.log(data)
       totalItems = data.paging.total_items
 
       applications.push(...data.data)
