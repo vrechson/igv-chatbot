@@ -7,25 +7,25 @@ const properties = {
     type: Number,
     required: true
   },
-  person: {
-    _id: {
-      type: Schema.Types.ObjectId,
-      required: true
-    }
+  name: {
+    type: String,
+    required: true
   }
 }
 
 const options = {
+  collection: 'people',
   id: false,
-  collection: 'applications',
-  versionKey: false,
-  strict: true
+  safe: true,
+  strict: true,
+  timestamps: false,
+  versionKey: false
 }
 
 const schema = new Schema(properties, options)
 
 const factory = (connection) => {
-  return connection.model('Application', schema)
+  return connection.model('Person', schema)
 }
 
 module.exports = schema
