@@ -6,6 +6,7 @@ const commands = require('./commands')
 const database = require('./database')
 const debug = require('debug')('igv-bot:app')
 const ChatService = require('./services/chat')
+const TokenService = require('./services/token')
 const PersonService = require('./services/person')
 const TelegramBot = require('node-telegram-bot-api')
 const UserDataService = require('./services/user-data')
@@ -17,16 +18,19 @@ const ApplicationService = require('./services/applications')
 const factory = () => {
   const { repositories, storages } = database.factory()
 
-  const personService = new PersonService(repositories.person, storages.person)
-  const applicationService = new ApplicationService(repositories.application, storages.application, personService)
   const chatService = new ChatService(repositories.chat, storages.chat)
-  const userDataService = new UserDataService(config, applicationService, personService)
+  const tokenService = new TokenService(repositories.token, storages.token)
+  const personService = new PersonService(repositories.person, storages.person)
+
+  const applicationService = new ApplicationService(repositories.application, storages.application, personService)
+  const userDataService = new UserDataService(config, applicationService, personService, tokenService)
 
   const services = {
     person: personService,
     application: applicationService,
     chat: chatService,
-    userData: userDataService
+    userData: userDataService,
+    token: tokenService
   }
 
   const bot = new TelegramBot(config.TELEGRAM_API_TOKEN, {
@@ -61,6 +65,11 @@ const factory = () => {
 
   bot.onText(/^\/start/, (msg, match) => {
     commands.start(msg, bot, services)
+            .catch(console.error)
+  })
+
+  bot.onText(/^\/token (.*)/, (msg, match) => {
+    commands.token(msg, match, bot, services)
             .catch(console.error)
   })
 

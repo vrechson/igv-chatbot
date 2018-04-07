@@ -3,16 +3,14 @@
 const axios = require('axios')
 
 class UserDataService {
-  constructor (config, applicationService, personService) {
+  constructor (config, applicationService, personService, tokenService) {
     this.$http = axios.create({
-      baseURL: config.EXPA_API_URL,
-      params: {
-        access_token: config.EXPA_API_TOKEN
-      }
+      baseURL: config.EXPA_API_URL
     })
 
-    this.$applicationService = applicationService
+    this.$tokenService = tokenService
     this.$personService = personService
+    this.$applicationService = applicationService
   }
 
 
@@ -33,7 +31,8 @@ class UserDataService {
 
     const { data: applicant } = await this.$http.get(endpoint, {
       params: {
-        'person_id': id
+        'person_id': id,
+        access_token: await this.$tokenService.get().then(({ token }) => token)
       }
     })
 

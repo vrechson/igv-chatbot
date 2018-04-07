@@ -15,25 +15,32 @@ const PersonModel = require('./models/person')
 const PersonStorage = require('./storages/person')
 const PersonRepository = require('./repositories/person')
 
+const TokenModel = require('./models/token')
+const TokenStorage = require('./storages/token')
+const TokenRepository = require('./repositories/token')
+
 const factory = () => {
   const connection = mongoose.createConnection(config.MONGO_DB_URI)
 
   const models = {
-    application: ApplicationModel.factory(connection),
+    chat: ChatModel.factory(connection),
+    token: TokenModel.factory(connection),
     person: PersonModel.factory(connection),
-    chat: ChatModel.factory(connection)
+    application: ApplicationModel.factory(connection)
   }
 
   const repositories = {
-    application: new ApplicationsRepository(models.application),
+    chat: new ChatRepositories(models.chat),
+    token: new TokenRepository(models.token),
     person: new PersonRepository(models.person),
-    chat: new ChatRepositories(models.chat)
+    application: new ApplicationsRepository(models.application)
   }
 
   const storages = {
-    application: new ApplicationsStorage(models.application),
+    chat: new ChatStorage(models.chat),
+    token: new TokenStorage(models.token),
     person: new PersonStorage(models.person),
-    chat: new ChatStorage(models.chat)
+    application: new ApplicationsStorage(models.application)
   }
 
   return { repositories, storages }
