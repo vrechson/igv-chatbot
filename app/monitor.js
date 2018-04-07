@@ -55,7 +55,8 @@ class Monitor {
           'filters[my]': 'opportunity',
           'filters[created_at][from]': date,
           page: currentPage++,
-          per_page: 100
+          per_page: 100,
+          access_token: await this.$services.token.get().then(({ token }) => token)
         }
       })
 
@@ -127,10 +128,7 @@ class Monitor {
 
 const factory = (services, bot) => {
   const http = axios.create({
-    baseURL: config.EXPA_API_URL,
-    params: {
-      access_token: config.EXPA_API_TOKEN
-    }
+    baseURL: config.EXPA_API_URL
   })
 
   return new Monitor(http, config, services, bot)
