@@ -42,6 +42,8 @@ const factory = () => {
 
   monitor.start()
 
+//  process.on('unhandledRejection', (reason, p) => { console.log('Unhandled Rejection at:', p, 'reason:', reason.stack); console.log(reason) });// application specific logging, throwing an error, or other logic here });
+
   bot.on('message', async (msg) => {
     if ('new_chat_members' in msg) {
       const joinedIds = msg.new_chat_members.map(user => user.id)
