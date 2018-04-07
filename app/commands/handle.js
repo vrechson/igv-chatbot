@@ -31,14 +31,18 @@ module.exports = async (callbackQuery, bot, { userData, person, chat }) => {
     return
   }
 
-  const text = operation === 'taken'
+  const text = operation === 'take'
     ? format(MSG_TAKEN, applicant.full_name, taker)
     : format(MSG_REJECTED, applicant.full_name, taker)
 
   await bot.answerCallbackQuery(callbackQuery.id)
 
   const applicantInfo = [
-    `${applicant.full_name}`
+    `${applicant.full_name}`,
+    `teste`,
+    `Telefone: ${applicant.contact_info.country_code} ${applicant.contact_info.phone}`,
+    `EP Manager: ${applicant.contacted_by.full_name}`,
+    `EP Manager phone ${applicant.contacted_by.contact_info.country_code} ${applicant.contacted_by.contact_info.phone}`
   ]
   .join('\n')
 
