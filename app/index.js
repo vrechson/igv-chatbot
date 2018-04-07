@@ -85,19 +85,8 @@ const factory = () => {
   })
 
   bot.on("callback_query", async (callbackQuery) => {
-    const msg = callbackQuery.message
-
-    const [ operation, personId ] = callbackQuery.data.split('_')
-
-    if (operation === 'take') {
-      const applicant = await userDataService.find(personId)
-
-      return bot.answerCallbackQuery(callbackQuery.id)
-        .then(() => bot.editMessageText(`${callbackQuery.message.text}\n[+] taken by: ${callbackQuery.from.first_name} ${callbackQuery.from.last_name}`, { message_id: msg.message_id, chat_id: msg.chat.id }))
-    }
-
-    bot.answerCallbackQuery(callbackQuery.id)
-      .then(() => bot.editMessageText(`${callbackQuery.message.text}\n[+] rejected by: ${callbackQuery.from.first_name} ${callbackQuery.from.last_name}`, { message_id: msg.message_id, chat_id: msg.chat.id }))
+    commands.handle(callbackQuery, bot, services)
+            .catch(console.error)
   });
 
   return bot

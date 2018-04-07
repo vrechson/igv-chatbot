@@ -54,7 +54,7 @@ class ApplicationService {
    * @param personId Id of the person
    * @returns {Promise<Object>}
    */
-  async create (code, personId) {
+  async create (code, personId, opportunityId) {
     await this.$personService.find(personId)
                              .catch(errorHandler)
 
@@ -62,6 +62,9 @@ class ApplicationService {
       code,
       person: {
         _id: personId
+      },
+      opportunity: {
+        _id: opportunityId
       }
     }
 
