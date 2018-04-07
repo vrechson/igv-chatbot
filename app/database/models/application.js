@@ -12,6 +12,12 @@ const properties = {
       type: Schema.Types.ObjectId,
       required: true
     }
+  },
+  opportunity: {
+    _id: {
+      type: Number,
+      required: true
+    }
   }
 }
 

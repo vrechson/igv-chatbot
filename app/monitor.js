@@ -21,21 +21,13 @@ class Monitor {
       const notificationPromises = Array.from(peopleMap.keys()).map(key => {
         const { full_name: fullName, home_lc: { country } } = peopleMap.get(key)
 
-        return this.$bot.sendMessage(chatId, `${fullName} just applied from ${country}`, {
+        const text = `${fullName} just applied from ${country}`
+
+        return this.$bot.sendMessage(chatId, text, {
           reply_markup: {
             inline_keyboard: [
-              [
-                {
-                  text: 'TAKE',
-                  callback_data: `take_${key}`,
-                }
-              ],
-              [
-                {
-                  text: 'REJECT',
-                  callback_data: `reject_${key}`,
-                }
-              ]
+              [ { text: 'TAKE', callback_data: `take_${key}`, } ],
+              [ { text: 'REJECT', callback_data: `reject_${key}`, } ]
             ]
           }
         })
@@ -67,7 +59,6 @@ class Monitor {
         }
       })
 
-      console.log(data)
       totalItems = data.paging.total_items
 
       applications.push(...data.data)
@@ -75,12 +66,19 @@ class Monitor {
       lastItemCount = data.data.length
     }
 
-    const peopleMap = applications.reduce((set, application) => set.set(application.person.id, application.person), new Map())
+    const peopleMap = applications.reduce((set, application) => {
+      return set.set(application.person.id, application.person)
+    }, new Map())
+
     const personCodes = Array.from(peopleMap.keys())
 
     const dbPeople = await this.$services.person.listCodes()
 
     const newPeople = personCodes.filter(id => !dbPeople.includes(id))
+
+    const newPeopleMap = newPeople.reduce((set, id) => {
+      return set.set(id, peopleMap.get(id))
+    }, new Map())
 
     debug('creating', newPeople.length, 'new people')
 
@@ -90,7 +88,7 @@ class Monitor {
         .catch(console.error)
     })
 
-    await this.notifyJoining(peopleMap)
+    await this.notifyJoining(newPeopleMap)
 
     const createdPeople = await Promise.all(personPromises)
 
@@ -98,20 +96,26 @@ class Monitor {
       return map.set(createdPerson.code, createdPerson)
     }, new Map())
 
-    const applicationsMap = applications.reduce((map, application) => map.set(application.id, application), new Map())
+    const applicationsMap = applications.reduce((map, application) => {
+      return map.set(application.id, application)
+    }, new Map())
+
     const applicationCodes = Array.from(applicationsMap.keys())
 
     const dbApplications = await this.$services.application.listCodes()
 
-    const newApplications = applicationCodes.filter(id => !dbApplications.includes(id))
+    const newApplications = applicationCodes.filter(id => {
+      return !dbApplications.includes(id)
+    })
 
     debug('creating', newApplications.length, 'new applications')
 
-    const applicationPromises = newApplications.map(applicationCode => {
+    const applicationPromises = newApplications.map(async applicationCode => {
       const application = applicationsMap.get(applicationCode)
       const person = createdPeopleMap.get(application.person.id)
+          || await this.$services.person.findByCode(application.person.id)
 
-      return this.$services.application.create(applicationCode, person._id)
+      return this.$services.application.create(applicationCode, person._id, application.opportunity.id)
         .catch(console.error)
     })
 

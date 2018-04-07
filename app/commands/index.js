@@ -1,9 +1,10 @@
 'use strict'
 
 module.exports = {
-  start: require('./start'),
-  first: require('./first'),
   last: require('./last'),
   rand: require('./rand'),
-  help: require('./help')
+  help: require('./help'),
+  start: require('./start'),
+  first: require('./first'),
+  handle: require('./handle')
 }

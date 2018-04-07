@@ -15,7 +15,8 @@ class ApplicationStorage {
   async create (params) {
     const application = pick(params, [
       'code',
-      'person._id'
+      'person._id',
+      'opportunity._id'
     ])
 
     return this.$model.create(application)
