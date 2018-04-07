@@ -39,7 +39,6 @@ module.exports = async (callbackQuery, bot, { userData, person, chat }) => {
 
   const applicantInfo = [
     `${applicant.full_name}`,
-    `teste`,
     `Telefone: ${applicant.contact_info.country_code} ${applicant.contact_info.phone}`,
     `EP Manager: ${applicant.contacted_by.full_name}`,
     `EP Manager phone ${applicant.contacted_by.contact_info.country_code} ${applicant.contacted_by.contact_info.phone}`
