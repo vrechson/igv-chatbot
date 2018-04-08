@@ -45,7 +45,7 @@ class Monitor {
     let currentPage = 1
     let totalItems = 1
     let lastItemCount = 101
-    const date = moment().format("YYYY-MM-DD")
+    const date = moment().subtract(1, 'days').format("YYYY-MM-DD")
 
     while (applications.length < totalItems && lastItemCount >= 100) {
       debug(`Requesting page ${currentPage} of ${Math.ceil(totalItems / 100)}`)

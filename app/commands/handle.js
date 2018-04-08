@@ -37,11 +37,33 @@ module.exports = async (callbackQuery, bot, { userData, person, chat }) => {
 
   await bot.answerCallbackQuery(callbackQuery.id)
 
+  const fullName = applicant.full_name || "Esse mocinho não tem nome"
+
+  const countryCode = applicant.contact_info
+    ? applicant.contact_info.country_code
+    : 'xx'
+
+  const telefone = applicant.contact_info
+    ? applicant.contact_info.phone
+    : 'indisponível'
+
+  const epmFullName = applicant.contacted_by
+    ? applicant.contacted_by.full_name
+    : 'indisponível'
+
+  const epmCountryCode = applicant.contacted_by
+    ? applicant.contacted_by.contact_info.country_code
+    : countryCode
+
+  const epmTelefone = applicant.contacted_by
+    ? applicant.contacted_by.contact_info.phone
+    : "indisponível"
+
   const applicantInfo = [
-    `${applicant.full_name}`,
-    `Telefone: ${applicant.contact_info.country_code} ${applicant.contact_info.phone}`,
-    `EP Manager: ${applicant.contacted_by.full_name}`,
-    `EP Manager phone ${applicant.contacted_by.contact_info.country_code} ${applicant.contacted_by.contact_info.phone}`
+    fullName,
+    `Telefone: ${countryCode} ${telefone}`,
+    `EP Manager: ${epmFullName}`,
+    `EP Manager phone: ${epmCountryCode} ${epmTelefone}`
   ]
   .join('\n')
 
