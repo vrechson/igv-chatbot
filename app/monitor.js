@@ -49,7 +49,7 @@ class Monitor {
 
     while (applications.length < totalItems && lastItemCount >= 100) {
       debug(`Requesting page ${currentPage} of ${Math.ceil(totalItems / 100)}`)
-      const { data } = await this.$http.get('/applications', {
+      await this.$http.get('/applications', {
         params: {
           'filters[status]': 'open',
           'filters[my]': 'opportunity',
@@ -57,14 +57,21 @@ class Monitor {
           page: currentPage++,
           per_page: 100,
           access_token: await this.$services.token.get().then(({ token }) => token)
+                                                        .catch(err => { err.message })
         }
       })
+      .then(({ data }) => {
+        totalItems = data.paging.total_items
 
-      totalItems = data.paging.total_items
+        applications.push(...data.data)
 
-      applications.push(...data.data)
-
-      lastItemCount = data.data.length
+        lastItemCount = data.data.length
+      })
+      .catch(err => {
+        console.log(`Error retrieving new applications: ${err.message}. Trying again in ${this.$config.EXPA_API_RECURENCE}`)
+        lastItemCount = 0
+        totalItems = 0
+      })
     }
 
     const peopleMap = applications.reduce((set, application) => {

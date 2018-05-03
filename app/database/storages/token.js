@@ -6,7 +6,14 @@ class ChatStorage {
   }
 
   async set(token) {
-    this.$model.findOneAndUpdate({}, { token })
+    const existingToken = await this.$model.findOne({})
+      
+    if (!existingToken) {
+      return this.$model.create({ token })
+                        .then(document => document.toObject())
+    }
+
+    return this.$model.findOneAndUpdate({}, { token })
                .then(document => document.toObject())
   }
 }
